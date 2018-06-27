@@ -23,7 +23,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.scss"
             ],
             "scripts": []
           },
@@ -123,5 +123,9 @@
       }
     }
   },
-  "defaultProject": "sourcing-client"
+  "defaultProject": "sourcing-client",
+  "cli": {
+    "packageManager": "yarn",
+    "packagemanager": "yarn"
+  }
 }
