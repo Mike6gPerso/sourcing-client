@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # SourcingClient
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.8.
@@ -28,3 +29,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 
 ## Based on: https://codeburst.io/getting-started-with-angular-material-db0c3c0e499e
+=======
+# sourcing-client
+HMI for Sourcing app
+>>>>>>> a3c0521f5644941f97d8b8a031c01c53f13ab087
