@@ -2,11 +2,16 @@
 <!-- <mat-toolbar color="primary">
       <span>Sourcing</span>
     </mat-toolbar> -->
-    <mat-toolbar>Search</mat-toolbar>
+    <mat-toolbar>
+    	<span>Search</span>
+		<!-- This fills the remaining space of the current row -->
+		  <span class="example-fill-remaining-space"></span>
+    </mat-toolbar>
 
     <span>This is the content</span>
     <form>
       <mat-form-field>
         <input type="text" matInput [formControl]="searchCtrl" placeholder="Search">
       </mat-form-field>
+      <button mat-button>Click me!</button>
     </form>

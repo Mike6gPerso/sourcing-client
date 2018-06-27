@@ -3,6 +3,7 @@
   top:72px;
   bottom:0px;
   left:0;
+  width:80%;
 }
 
 .sidenav {
@@ -12,4 +13,5 @@
 
 .nav-content {
 	padding-left: 20px;
+	width: 100%;
 }
