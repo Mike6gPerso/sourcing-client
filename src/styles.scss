@@ -12,12 +12,14 @@ $theme: mat-light-theme($primary, $accent, $warn);
 
 @include angular-material-theme($theme);
 
-$mat-font-family: Roboto;
+$mat-font-family: 'Roboto sans-serif';
 body {
     font-family: $mat-font-family;
     font-weight: normal;
 }
 
+
 h1, h2, h3, h4 {
     font-weight: normal;
+    font-family: $mat-font-family;
 }

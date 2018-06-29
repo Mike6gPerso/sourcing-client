@@ -35,8 +35,11 @@
       </button>
   </mat-sidenav>
   <mat-sidenav-content class="nav-content">
-     <router-outlet></router-outlet>
-    <!--  <app-search></app-search> -->
+     <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
+      <div fxFlex="80%">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
     
   </mat-sidenav-content>
 </mat-sidenav-container>
