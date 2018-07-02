@@ -1,0 +1,19 @@
+<div *ngIf="entreprise">
+	<div>
+		<label>Name: </label> {{entreprise.entreprise}}
+	</div>
+	<div>
+		<label>Context: </label> {{entreprise.context}}
+	</div>
+	<div>
+		<label>Description: </label> {{entreprise.descriptif}}
+	</div>
+ 
+	<span class="button is-small btn-primary" *ngIf='entreprise.active' (click)='updateActive(false)'>Inactive</span>
+	
+	<span class="button is-small btn-primary" *ngIf='!entreprise.active' (click)='updateActive(true)'>Active</span>
+ 
+	<span class="button is-small btn-danger" (click)='deleteEntreprise()'>Delete</span>
+	
+	<hr/>
+</div>

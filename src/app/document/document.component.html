@@ -1,3 +1,5 @@
-<p>
-  document works!
-</p>
+<ul>
+  <li class="text" *ngFor="let document of documents | async">
+    {{document.entreprise}} - {{document.descriptif}}
+  </li>
+</ul>
