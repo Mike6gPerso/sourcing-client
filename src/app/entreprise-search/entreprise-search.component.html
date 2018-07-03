@@ -1,0 +1,45 @@
+<div class="container">
+  <div class="m-3 text-center">
+    <form class="form-inline"
+    	(ngSubmit)="doSearch()">
+      <div class="form-group">
+        <input type="search"
+               class="form-control"
+               placeholder="Enter search string"
+               name="search"
+                [(ngModel)]="term"
+               required>
+      </div>
+      <button type="submit"
+              class="btn btn-primary">
+        Search
+      </button>
+    </form>
+    <hr />
+
+    <div class="text-center">
+    	 <p *ngIf="entrepriseService.initialised && entrepriseService.loading"
+     		class="lead">Loading...</p>
+
+     <p *ngIf="entrepriseService.initialised && !entrepriseService.loading && entrepriseService.books?.length === 0"
+         class="lead">No results returned</p>
+
+      <p *ngIf="!entrepriseService.initialised"
+         class="lead">Enter a search string above and press search</p>
+    </div>
+  </div>
+
+   <ul>
+    <li *ngFor="let entreprise of entrepriseService.entreprises">{{ entreprise.entreprise }}</li>
+  </ul>
+
+  <!-- TODO: Show the results of the search -->
+  <app-entreprise-list></app-entreprise-list>
+
+
+  <div class="d-flex justify-content-center">
+    <!-- TODO: Show pagnation -->
+   <!--  <app-pager>
+    </app-pager> -->
+  </div>
+</div>

@@ -1,0 +1,7 @@
+<h1>Entreprises</h1>
+<div *ngFor="let entreprise of entreprises" style="width: 300px;">
+	<entreprise-details [entreprise]='entreprise'></entreprise-details>
+</div>
+<div style="margin-top:20px;">
+	<button type="button" class="button btn-danger" (click)='deleteEntreprises()'>Delete All</button>
+</div>
