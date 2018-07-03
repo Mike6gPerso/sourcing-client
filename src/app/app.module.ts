@@ -26,6 +26,7 @@ import { environment } from '../environments/environment';
 import { EntrepriseDetailsComponent } from './entreprise-details/entreprise-details.component';
 import { EntrepriseListComponent } from './entreprise-list/entreprise-list.component';
 import { EntrepriseSearchComponent } from './entreprise-search/entreprise-search.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 
 @NgModule({
@@ -50,7 +51,8 @@ import { EntrepriseSearchComponent } from './entreprise-search/entreprise-search
     CustomMaterialModule,
     FlexLayoutModule,
     AngularFireModule.initializeApp(environment.firebase, 'sourcing-stratups'),
-    AngularFireDatabaseModule
+    AngularFireDatabaseModule,
+    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [],
   bootstrap: [AppComponent]
