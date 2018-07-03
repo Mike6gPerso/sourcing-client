@@ -30,3 +30,6 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## Based on: https://codeburst.io/getting-started-with-angular-material-db0c3c0e499e
 
+Build for production: 
+$ ng build --prod --source-map
+$ npx source-map-explorer main.bundle.js

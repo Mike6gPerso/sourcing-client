@@ -10,11 +10,11 @@ import { map } from 'rxjs/operators';
 })
 export class EntrepriseSearchComponent implements OnInit {
 
-	private term: string = '';
+	term: string = '';
 
 	//entreprises: any;
 
-  constructor(private entrepriseService: EntrepriseService,
+  constructor(public entrepriseService: EntrepriseService,
   	private route: ActivatedRoute,
   	private router: Router) {
   	this.route.params.subscribe(params => {

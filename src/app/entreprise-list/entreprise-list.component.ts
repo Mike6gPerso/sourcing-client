@@ -15,7 +15,7 @@ export class EntrepriseListComponent implements OnInit {
 
 	entreprises: any;
 	entrepriseSubscription: Subscription;
-	columnsToDisplay: string[] = ['entreprise', 'context'];
+	displayedColumns: string[] = ['entreprise', 'context'];
 	dataSource : MatTableDataSource<Entreprise>; //= new MatTableDataSource<>();
 
 	@ViewChild(MatPaginator) paginator: MatPaginator;
@@ -45,6 +45,9 @@ export class EntrepriseListComponent implements OnInit {
   	this.entrepriseSubscription.unsubscribe();
   }
 
+  deleteEntreprises() {
+    console.log('nope !');
+  }
 
 
 }
