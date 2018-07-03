@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
+import { AngularFireDatabase, AngularFireList  } from 'angularfire2/database';
 import { Entreprise } from './entreprise';
 
 
@@ -38,6 +38,10 @@ export class EntrepriseService {
   	});
   	*/
     return this.entreprisesRef;
+  }
+
+  getPaginatedEntreprises(start: number = 0, end: number = 10): AngularFireList<Entreprise>  {
+  	return this.db.list(this.dbPath, ref => ref.limitToFirst(end));
   }
  
   deleteAll(): void {
