@@ -1,11 +1,11 @@
 <h1>Entreprises</h1>
 
 <mat-form-field>
-  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+	<input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
 </mat-form-field>
 
 <div class="mat-elevation-z2">
-	<table mat-table matSort [dataSource]="dataSource">
+	<table mat-table matSort matSortActive="entreprise" matSortDisableClear matSortDirection="asc" [dataSource]="dataSource">
 		<!-- Name Column -->
 		<ng-container matColumnDef="entreprise">
 			<th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
