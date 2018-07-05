@@ -14,7 +14,7 @@
 			<th mat-header-cell *matHeaderCellDef>
 			</th>
 			<td mat-cell *matCellDef="let row">
-				<button mat-button (click)="onEditButtonClick(row)" routerLink="/entreprises/{{row.key}}"aria-label="Edit">Edit</button>
+				<button mat-button (click)="onViewButtonClick(row)" routerLink="/entreprises/{{row.key}}"aria-label="View">View</button>
 			</td>
 		</ng-container>
 		<!-- Name Column -->

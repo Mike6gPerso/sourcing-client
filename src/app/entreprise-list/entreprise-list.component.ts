@@ -68,7 +68,7 @@ export class EntrepriseListComponent implements OnInit, AfterViewInit {
     console.log('nope !');
   }
 
-  onEditButtonClick(row: Entreprise){
+  onViewButtonClick(row: Entreprise){
     console.log(JSON.stringify(row));
   }
 

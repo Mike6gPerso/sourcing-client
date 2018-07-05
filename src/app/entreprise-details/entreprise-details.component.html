@@ -1,24 +1,85 @@
-<div *ngIf="entreprise">
-	<form [formGroup]="entrepriseForm" (submit)="onSubmit()">
-		<mat-form-field>
-			<input matInput placeholder="Name" value="{{ (entreprise | async)?.entreprise}}">
-		</mat-form-field>
-	</form>
-	<div>
-		<label>Name: </label> {{ (entreprise | async)?.entreprise}}
+<mat-card>
+	<div class="spinner-container" *ngIf="loading">
+		<mat-spinner></mat-spinner>
 	</div>
-	<div>
-		<label>Context: </label> {{(entreprise | async)?.context}}
-	</div>
-	<div>
-		<label>Description: </label> {{ (entreprise | async)?.descriptif}}
-	</div>
+	<div [hidden]="loading">
+		<form [formGroup]="entrepriseForm">
+			<mat-card-title>
+				<mat-form-field>
+					<input 
+					matInput placeholder="Name" 
+					formControlName="entreprise" 
+					id="entreprise"
+					class="form-control"
+					[readOnly]="!edit.entreprise"
+					[value]="(entreprise | async)?.entreprise"
+					[class.dirty]="entrepriseForm.controls['entreprise'].dirty">
+				</mat-form-field>
+				<button mat-button aria-label="Update" (click)="toggleEditField('entreprise')">
+					<i *ngIf="edit.entreprise" class="material-icons">done</i>
+					<i *ngIf="!edit.entreprise" class="material-icons">edit</i>
+				</button>
+				<mat-divider></mat-divider>
+			</mat-card-title>
 
-	<div>
-		<label>url: </label> {{ (entreprise | async)?.url}}
-	</div>
- 
-	<hr/>
+			<mat-card-content>
+				<div class="form-group">
+					<mat-form-field>
+						<input 
+						matInput placeholder="Context" 
+						formControlName="context" 
+						id="context"
+						class="form-control"
+						value="{{ (entreprise | async)?.context}}"
+						[class.dirty]="entrepriseForm.controls['context'].dirty">
+					</mat-form-field>
+					<button mat-button aria-label="Update" (click)="toggleEditField('context')">
+					<i *ngIf="edit.context" class="material-icons">done</i>
+					<i *ngIf="!edit.context" class="material-icons">edit</i>
+				</button>
+				</div>
+
+				<div>
+					<mat-form-field class="description">
+						<mat-label>Description</mat-label>
+						<textarea matInput
+						formControlName="descriptif" 
+						cdkTextareaAutosize
+						#autosize="cdkTextareaAutosize"
+						cdkAutosizeMinRows="5"
+						cdkAutosizeMaxRows="15">     
+					</textarea>
+				</mat-form-field>
+			</div>
+			<!--
+			<div>
+				<label>Name: </label> {{ (entreprise | async)?.entreprise}}
+			</div>
+			<div>
+				<label>Context: </label> {{(entreprise | async)?.context}}
+			</div>
+			<div>
+				<label>Description: </label> {{ (entreprise | async)?.descriptif}}
+			</div>
+			-->
+			<div>
+				<label>Url: </label> {{ (entreprise | async)?.url}}
+			</div>
+			<div>
+				<label>Keywords</label>
+				<mat-list>
+					<mat-list-item *ngFor='let keyword of (entreprise |async)?.keywords'>
+						{{keyword}}
+					</mat-list-item>
+				</mat-list>
+			</div>
+			<mat-divider></mat-divider>
+		</mat-card-content>
+		<mat-card-footer>
+			<button mat-button aria-label="Update" type="submit" (click)="onSubmit(entrepriseForm.value)">Update</button>
+			<button mat-button aria-label="Go Back" (click)="goBack()">Go back</button>
+		</mat-card-footer>
+	</form>
 </div>
 
-<button mat-button aria-label="Go Back" (click)="goBack()">Go back</button>
+</mat-card>

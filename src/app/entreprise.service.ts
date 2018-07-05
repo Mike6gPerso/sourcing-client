@@ -20,7 +20,9 @@ export class EntrepriseService {
   }
 
   updateEntreprise(key: string, value: any): void {
-    this.entreprisesRef.update(key, value).catch(error => this.handleError(error));
+    let itemRef = this.db.object(this.dbPath + '/' + key);
+    itemRef.update(value).then(_ => console.log('updated!')).catch(error => this.handleError(error));
+    //this.entreprisesRef.update(this.dbPath + '/' + key, value).then(_ => console.log('updated!')).catch(error => this.handleError(error));
   }
  
   deleteEntreprise(key: string): void {

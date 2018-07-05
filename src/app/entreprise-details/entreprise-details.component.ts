@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { Observable } from 'rxjs';
 
-import { FormControl, FormBuilder } from '@angular/forms';
+import { FormControl, FormBuilder, FormGroup } from '@angular/forms';
 
 import { EntrepriseService } from '../entreprise.service';
 import { Entreprise } from '../entreprise';
@@ -16,37 +16,70 @@ import { Entreprise } from '../entreprise';
 })
 export class EntrepriseDetailsComponent implements OnInit {
 
-	entreprise: Observable<Entreprise>;
+  entrepriseId: string;
+  entreprise: Observable<Entreprise>;
+  edit: Object = {'entreprise': false, 'context': false};
+  entrepriseForm : FormGroup;
+  loading: boolean = true;
 
-  
   constructor(
-            private route: ActivatedRoute,
-            private entrepriseService: EntrepriseService,
-            private location: Location
-            ) { }
+    private route: ActivatedRoute,
+    private entrepriseService: EntrepriseService,
+    private location: Location,
+    private formBuilder: FormBuilder
+    ) { }
 
   ngOnInit(): void {
     this.loadEntreprise();
+
+    this.entrepriseForm = this.formBuilder.group({
+      'entreprise': [{ value: '', disabled: true}],
+      'context': [{ value: '', disabled: true}], 
+      'descriptif': ['']
+    });
+
+/*
+    this.entrepriseForm = new FormGroup({
+       entreprise: new FormControl(),
+       context: new FormControl()
+    });
+    */
   }
 
   private loadEntreprise(): void {
-    let id = this.route.snapshot.paramMap.get('id');
-    console.log("id: " + id);
-    this.entreprise = this.entrepriseService.getEntreprise(id).valueChanges();
+    this.entrepriseId = this.route.snapshot.paramMap.get('id');
+    console.log("id: " + this.entrepriseId);
+    this.entreprise = this.entrepriseService.getEntreprise(this.entrepriseId).valueChanges();
+    this.entreprise.subscribe( e => this.updateForm(e)
+      );
     //console.log("this.entreprise:" + JSON.stringify(this.entreprise));
   }
 
-/*
-  updateActive(isActive: boolean) {
-    this.entrepriseService.updateEntreprise(this.entreprise.key, { active: isActive });
+  private updateForm(e : Entreprise){
+    this.entrepriseForm.controls.entreprise.setValue(e.entreprise);
+    this.entrepriseForm.controls.context.setValue(e.context);
+    this.entrepriseForm.controls.descriptif.setValue(e.descriptif);
+  //setTimeout(() => this.autoSize.resizeToFitContent());
+  this.loading = false;
+}
+
+private toggleEditField(field: string){
+  this.edit[field] = !this.edit[field];
+  //this.entrepriseForm.controls[field].enable();
+  if(this.edit[field]){
+    this.entrepriseForm.controls[field].enable();
+  } else {
+    this.entrepriseForm.controls[field].disable();
   }
- 
-  deleteCustomer() {
-    this.entrepriseService.deleteEntreprise(this.entreprise.key);
-  }
-*/
-  goBack(): void {
-    this.location.back();
-  }
+}
+
+goBack(): void {
+  this.location.back();
+}
+onSubmit(value: any): void {
+  console.log('isDirty: ' + this.entrepriseForm.dirty);
+  console.log(value);
+  this.entrepriseService.updateEntreprise(this.entrepriseId, value);
+}
 
 }
