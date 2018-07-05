@@ -1,5 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 
+import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
+import { Observable } from 'rxjs';
+
 import { EntrepriseService } from '../entreprise.service';
 import { Entreprise } from '../entreprise';
 
@@ -10,19 +14,36 @@ import { Entreprise } from '../entreprise';
 })
 export class EntrepriseDetailsComponent implements OnInit {
 
-	@Input() entreprise: Entreprise;
+	/*@Input() */
+  entreprise: Observable<Entreprise>;
 
-  constructor(private entrepriseService: EntrepriseService) { }
+  
+  constructor(
+            private route: ActivatedRoute,
+            private entrepriseService: EntrepriseService,
+            private location: Location
+            ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
+    this.getEntreprise();
   }
 
+  getEntreprise(): void {
+    let id = this.route.snapshot.paramMap.get('id');
+    this.entreprise = this.entrepriseService.getEntreprise(id).valueChanges();
+  }
+
+/*
   updateActive(isActive: boolean) {
     this.entrepriseService.updateEntreprise(this.entreprise.key, { active: isActive });
   }
  
   deleteCustomer() {
     this.entrepriseService.deleteEntreprise(this.entreprise.key);
+  }
+*/
+  goBack(): void {
+    this.location.back();
   }
 
 }

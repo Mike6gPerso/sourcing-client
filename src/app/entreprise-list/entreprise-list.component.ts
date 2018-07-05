@@ -19,7 +19,7 @@ export class EntrepriseListComponent implements OnInit, AfterViewInit {
 	entreprises: any;
 	entrepriseSubscription: Subscription;
 	displayedColumns: string[] = ['edit', 'entreprise', 'context', 'descriptif'];
-	dataSource : MatTableDataSource<Entreprise>; //= new MatTableDataSource<>();
+	dataSource : MatTableDataSource<Entreprise>;
 
 	@ViewChild(MatPaginator) paginator: MatPaginator;
 	@ViewChild(MatSort) sort: MatSort;
@@ -53,7 +53,6 @@ export class EntrepriseListComponent implements OnInit, AfterViewInit {
   	 		this.dataSource.sort = this.sort;
         this.loadingSubject.next(false);
   	 	});
-  	//subscription.unsubscribe();
   }
 
   applyFilter(filterValue: string) {

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase, AngularFireList  } from 'angularfire2/database';
+import { AngularFireDatabase, AngularFireList, AngularFireObject } from 'angularfire2/database';
 import { Entreprise } from './entreprise';
 
 
@@ -36,7 +36,13 @@ export class EntrepriseService {
   }
  
   deleteAll(): void {
-    this.entreprisesRef.remove().catch(error => this.handleError(error));
+    //this.entreprisesRef.remove().catch(error => this.handleError(error));
+  }
+
+  getEntreprise(id: string): AngularFireObject<Entreprise> {
+    return this.db.object(this.dbPath + '/' + id);
+      //.subscribe(entreprise => { return entreprise });
+
   }
  
   private handleError(error) {
