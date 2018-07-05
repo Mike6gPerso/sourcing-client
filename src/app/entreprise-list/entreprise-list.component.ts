@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
 import { map } from 'rxjs/operators';
-import { Subscription } from 'rxjs';
-import { MatSort, MatPaginator, MatTableDataSource } from '@angular/material';
+import { Subscription, BehaviorSubject } from 'rxjs';
+import { MatSort, MatPaginator, MatTableDataSource, MatProgressSpinnerModule } from '@angular/material';
 
 import { EntrepriseService } from '../entreprise.service';
 import { Entreprise } from '../entreprise';
@@ -9,13 +9,16 @@ import { Entreprise } from '../entreprise';
 @Component({
 	selector: 'app-entreprise-list',
 	templateUrl: './entreprise-list.component.html',
-	styleUrls: ['./entreprise-list.component.css']
+	styleUrls: ['./entreprise-list.component.scss']
 })
 export class EntrepriseListComponent implements OnInit, AfterViewInit {
 
+  private loadingSubject = new BehaviorSubject<boolean>(false);
+  public loading$ = this.loadingSubject.asObservable();
+
 	entreprises: any;
 	entrepriseSubscription: Subscription;
-	displayedColumns: string[] = ['entreprise', 'context', 'descriptif'];
+	displayedColumns: string[] = ['edit', 'entreprise', 'context', 'descriptif'];
 	dataSource : MatTableDataSource<Entreprise>; //= new MatTableDataSource<>();
 
 	@ViewChild(MatPaginator) paginator: MatPaginator;
@@ -33,6 +36,7 @@ export class EntrepriseListComponent implements OnInit, AfterViewInit {
 	}
 
 	getEntreprisesList() {
+     this.loadingSubject.next(true);
   	 // Use snapshotChanges().map() to store the key
   	 this.entrepriseSubscription = this.entrepriseService
   	 	.getEntreprisesList()
@@ -47,6 +51,7 @@ export class EntrepriseListComponent implements OnInit, AfterViewInit {
   	 		this.dataSource = new MatTableDataSource<Entreprise>(entreprises);
   	 		this.dataSource.paginator = this.paginator;
   	 		this.dataSource.sort = this.sort;
+        this.loadingSubject.next(false);
   	 	});
   	//subscription.unsubscribe();
   }
@@ -62,6 +67,10 @@ export class EntrepriseListComponent implements OnInit, AfterViewInit {
 
   deleteEntreprises() {
     console.log('nope !');
+  }
+
+  onEditButtonClick(row: Entreprise){
+    console.log(JSON.stringify(row));
   }
 
 
