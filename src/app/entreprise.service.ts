@@ -28,16 +28,7 @@ export class EntrepriseService {
   }
  
   getEntreprisesList(): AngularFireList<Entreprise> {
-  	//return this.db.database.ref(this.dbPath).limitToFirst(10);
-  	/*
-  	return this.db.list(this.dbPath, { 
-  		query : {
-  			limitToFirst: 5
-  		}
-
-  	});
-  	*/
-    return this.entreprisesRef;
+  	return this.entreprisesRef;
   }
 
   getPaginatedEntreprises(start: number = 0, end: number = 10): AngularFireList<Entreprise>  {
