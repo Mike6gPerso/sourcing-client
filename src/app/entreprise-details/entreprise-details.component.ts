@@ -18,7 +18,7 @@ export class EntrepriseDetailsComponent implements OnInit {
 
   entrepriseId: string;
   entreprise: Observable<Entreprise>;
-  edit: Object = {'entreprise': false, 'context': false};
+  edit: any = {'entreprise': false, 'context': false};
   entrepriseForm : FormGroup;
   loading: boolean = true;
 
@@ -63,7 +63,7 @@ export class EntrepriseDetailsComponent implements OnInit {
   this.loading = false;
 }
 
-private toggleEditField(field: string){
+toggleEditField(field: string){
   this.edit[field] = !this.edit[field];
   //this.entrepriseForm.controls[field].enable();
   if(this.edit[field]){
