@@ -1,11 +1,11 @@
-<div *ngIf="entreprise | async">
-	<!-- <form [formGroup]="entrepriseForm" (submit)="onSubmit()">
+<div *ngIf="entreprise">
+	<form [formGroup]="entrepriseForm" (submit)="onSubmit()">
 		<mat-form-field>
-			<input matInput placeholder="Name">
+			<input matInput placeholder="Name" value="{{ (entreprise | async)?.entreprise}}">
 		</mat-form-field>
-	</form> -->
+	</form>
 	<div>
-		<label>Entreprise Name: </label> {{ (entreprise | async)?.entreprise}}
+		<label>Name: </label> {{ (entreprise | async)?.entreprise}}
 	</div>
 	<div>
 		<label>Context: </label> {{(entreprise | async)?.context}}

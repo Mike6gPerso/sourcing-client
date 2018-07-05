@@ -1,8 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { Observable } from 'rxjs';
+
+import { FormControl, FormBuilder } from '@angular/forms';
 
 import { EntrepriseService } from '../entreprise.service';
 import { Entreprise } from '../entreprise';
@@ -14,8 +16,7 @@ import { Entreprise } from '../entreprise';
 })
 export class EntrepriseDetailsComponent implements OnInit {
 
-	/*@Input() */
-  entreprise: Observable<Entreprise>;
+	entreprise: Observable<Entreprise>;
 
   
   constructor(
@@ -25,12 +26,14 @@ export class EntrepriseDetailsComponent implements OnInit {
             ) { }
 
   ngOnInit(): void {
-    this.getEntreprise();
+    this.loadEntreprise();
   }
 
-  getEntreprise(): void {
+  private loadEntreprise(): void {
     let id = this.route.snapshot.paramMap.get('id');
+    console.log("id: " + id);
     this.entreprise = this.entrepriseService.getEntreprise(id).valueChanges();
+    //console.log("this.entreprise:" + JSON.stringify(this.entreprise));
   }
 
 /*
