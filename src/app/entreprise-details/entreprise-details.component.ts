@@ -4,7 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { Observable } from 'rxjs';
 
-import { FormControl, FormBuilder, FormGroup } from '@angular/forms';
+import { FormControl, FormBuilder, FormGroup, FormArray } from '@angular/forms';
+import { MatSnackBar } from '@angular/material';
 
 import { EntrepriseService } from '../entreprise.service';
 import { Entreprise } from '../entreprise';
@@ -26,7 +27,8 @@ export class EntrepriseDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private entrepriseService: EntrepriseService,
     private location: Location,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    public snackBar: MatSnackBar
     ) { }
 
   ngOnInit(): void {
@@ -35,15 +37,11 @@ export class EntrepriseDetailsComponent implements OnInit {
     this.entrepriseForm = this.formBuilder.group({
       'entreprise': [{ value: '', disabled: true}],
       'context': [{ value: '', disabled: true}], 
-      'descriptif': ['']
+      'descriptif': [''],
+      'keywords': this.formBuilder.array([])
     });
 
-/*
-    this.entrepriseForm = new FormGroup({
-       entreprise: new FormControl(),
-       context: new FormControl()
-    });
-    */
+
   }
 
   private loadEntreprise(): void {
@@ -54,14 +52,27 @@ export class EntrepriseDetailsComponent implements OnInit {
       );
     //console.log("this.entreprise:" + JSON.stringify(this.entreprise));
   }
+  private cleanFormArray(formArray: FormArray):void {
+    while(formArray.length != 0) {
+      formArray.removeAt(0);
+    }
+  }
+  
 
   private updateForm(e : Entreprise){
+    console.log("updateForm!");
     this.entrepriseForm.controls.entreprise.setValue(e.entreprise);
     this.entrepriseForm.controls.context.setValue(e.context);
     this.entrepriseForm.controls.descriptif.setValue(e.descriptif);
-  //setTimeout(() => this.autoSize.resizeToFitContent());
-  this.loading = false;
+    this.cleanFormArray(this.entrepriseForm.controls.keywords as FormArray);
+    if(e.keywords){
+      for(let keyword of e.keywords){
+        (this.entrepriseForm.controls.keywords as FormArray).push(new FormControl(keyword));
+      }
+    }
+    this.loading = false;
 }
+
 
 toggleEditField(field: string){
   this.edit[field] = !this.edit[field];
@@ -77,9 +88,29 @@ goBack(): void {
   this.location.back();
 }
 onSubmit(value: any): void {
-  console.log('isDirty: ' + this.entrepriseForm.dirty);
-  console.log(value);
-  this.entrepriseService.updateEntreprise(this.entrepriseId, value);
+  //console.log('isDirty: ' + this.entrepriseForm.dirty);
+  //console.log(value);
+  this.entrepriseService.updateEntreprise(this.entrepriseId, value).then(
+    () =>
+    this.snackBar.open('Saved',  '', {
+      duration: 1000,
+    })
+    );
 }
 
+get keywords(): FormArray {
+    return this.entrepriseForm.get("keywords") as FormArray;
+ } 
+
+removeKeyword(keywordIndex: number){
+  console.log('removing keyword with index: ' + keywordIndex);
+  (this.entrepriseForm.controls.keywords as FormArray ).removeAt(keywordIndex);
+  //console.log(this.entrepriseForm.controls.keywords.value[keywordIndex]);
+}
+
+addKeyword(){
+  (this.entrepriseForm.controls.keywords as FormArray ).push(new FormControl());
+  //this.entrepriseForm.controls.keywords.setValue(this.entrepriseForm.controls.keywords.value.splice(keywordIndex, 1))  ;
+  //console.log(this.entrepriseForm.controls.keywords.value[keywordIndex]);
+}
 }
