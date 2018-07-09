@@ -19,3 +19,15 @@
 .mat-form-field.description {
 	width: 100%;
 }
+
+mat-form-field[hidden] {
+	display: none;
+}
+
+div.url-editor-container {
+	display: inline;
+}
+
+input {
+	text-align: center;
+}

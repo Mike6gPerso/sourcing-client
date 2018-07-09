@@ -19,7 +19,7 @@ export class EntrepriseDetailsComponent implements OnInit {
 
   entrepriseId: string;
   entreprise: Observable<Entreprise>;
-  edit: any = {'entreprise': false, 'context': false};
+  edit: any = {'entreprise': false, 'context': false, 'url': false};
   entrepriseForm : FormGroup;
   loading: boolean = true;
 
@@ -35,8 +35,9 @@ export class EntrepriseDetailsComponent implements OnInit {
     this.loadEntreprise();
 
     this.entrepriseForm = this.formBuilder.group({
-      'entreprise': [{ value: '', disabled: true}],
+      'entreprise': [{ value: 'abcd', disabled: true}],
       'context': [{ value: '', disabled: true}], 
+      'url': [{ value: '', disabled: true}], 
       'descriptif': [''],
       'keywords': this.formBuilder.array([])
     });
@@ -64,6 +65,7 @@ export class EntrepriseDetailsComponent implements OnInit {
     this.entrepriseForm.controls.entreprise.setValue(e.entreprise);
     this.entrepriseForm.controls.context.setValue(e.context);
     this.entrepriseForm.controls.descriptif.setValue(e.descriptif);
+    this.entrepriseForm.controls.url.setValue(e.url);
     this.cleanFormArray(this.entrepriseForm.controls.keywords as FormArray);
     if(e.keywords){
       for(let keyword of e.keywords){
@@ -88,14 +90,20 @@ goBack(): void {
   this.location.back();
 }
 onSubmit(value: any): void {
+  this.entrepriseForm.enable();
   //console.log('isDirty: ' + this.entrepriseForm.dirty);
-  //console.log(value);
-  this.entrepriseService.updateEntreprise(this.entrepriseId, value).then(
+  console.log(value);
+  this.entrepriseService.updateEntreprise(this.entrepriseId, this.entrepriseForm.value).then(
     () =>
     this.snackBar.open('Saved',  '', {
       duration: 1000,
     })
     );
+
+  for(let field in this.edit){
+    this.edit[field] = false;
+    this.entrepriseForm.controls[field].disable();
+  }
 }
 
 get keywords(): FormArray {
@@ -105,12 +113,10 @@ get keywords(): FormArray {
 removeKeyword(keywordIndex: number){
   console.log('removing keyword with index: ' + keywordIndex);
   (this.entrepriseForm.controls.keywords as FormArray ).removeAt(keywordIndex);
-  //console.log(this.entrepriseForm.controls.keywords.value[keywordIndex]);
 }
 
 addKeyword(){
   (this.entrepriseForm.controls.keywords as FormArray ).push(new FormControl());
-  //this.entrepriseForm.controls.keywords.setValue(this.entrepriseForm.controls.keywords.value.splice(keywordIndex, 1))  ;
-  //console.log(this.entrepriseForm.controls.keywords.value[keywordIndex]);
+  
 }
 }

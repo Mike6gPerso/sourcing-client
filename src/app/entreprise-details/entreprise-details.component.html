@@ -38,7 +38,25 @@
 					<i *ngIf="!edit.context" class="material-icons">edit</i>
 				</button>
 				</div>
-
+				<div>
+					<!-- <label>Url: </label>-->
+					<a rel="noopener noreferrer" [hidden]="edit.url" target="_blank" href="http://{{ entrepriseForm.controls.url.value }}">{{  entrepriseForm.controls.url.value}}</a>
+					<div class="url-editor-container">
+						<mat-form-field [hidden]="!edit.url">
+							<input 
+								matInput placeholder="Url" 
+								formControlName="url"
+								id="url"
+								class="form-control"
+								[value]="(entreprise | async)?.url"
+								[class.dirty]="entrepriseForm.controls['url'].dirty">
+							</mat-form-field>
+					</div>
+					<button mat-button aria-label="Update" (click)="toggleEditField('url')">
+						<i *ngIf="edit.url" class="material-icons">done</i>
+						<i *ngIf="!edit.url" class="material-icons">edit</i>
+					</button>
+				</div>
 				<div>
 					<mat-form-field class="description">
 						<mat-label>Description</mat-label>
@@ -51,26 +69,12 @@
 					</textarea>
 				</mat-form-field>
 			</div>
-			<!--
-			<div>
-				<label>Name: </label> {{ (entreprise | async)?.entreprise}}
-			</div>
-			<div>
-				<label>Context: </label> {{(entreprise | async)?.context}}
-			</div>
-			<div>
-				<label>Description: </label> {{ (entreprise | async)?.descriptif}}
-			</div>
-			-->
 			<div>
 				<label>Keywords</label>
 				<button mat-button aria-label="Add" (click)="addKeyword()">
 					<i class="material-icons">add</i>
 				</button>
 				<mat-list>
-					<!-- <mat-list-item *ngFor='let keyword of (entreprise |async)?.keywords; index as i'>
-						{{keyword}}
-					</mat-list-item> -->
 					<div formArrayName="keywords">
 						<mat-list-item  *ngFor="let keyword of keywords.controls; index as i">
 							<mat-form-field>
@@ -83,9 +87,6 @@
 					</div>
 				</mat-list>
 				
-			</div>
-			<div>
-				<label>Url: </label><a rel="noopener noreferrer" target="_blank" href="http://{{ (entreprise | async)?.url}}">{{ (entreprise | async)?.url}}</a>
 			</div>
 			<mat-divider></mat-divider>
 		</mat-card-content>
