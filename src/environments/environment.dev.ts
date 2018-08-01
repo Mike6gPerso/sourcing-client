@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  apiUrl: 'http://localhost:3000/search/',
   firebase: {
     apiKey: "xxxxxxxxxxx",
     authDomain: "sourcing-stratups.firebaseapp.com",

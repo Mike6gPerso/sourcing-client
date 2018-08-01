@@ -5,4 +5,5 @@ export class Entreprise {
 	entreprise: string;
 	keywords: string[];
 	url: string;
+	score: string;
 }

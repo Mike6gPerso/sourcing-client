@@ -14,3 +14,15 @@
       </mat-form-field>
       <button mat-button (click)="doSearch()" aria-label="Perform Click">Click me!</button>
     </form>
+
+     <app-entreprise-list [list]="entreprisesObs"></app-entreprise-list>
+
+<!--
+    <ul>
+      <li *ngFor="let e of entreprises">
+        {{e.score}}
+        {{e.entreprise}}
+        {{e.descriptif}}
+      </li>
+    </ul>
+-->
